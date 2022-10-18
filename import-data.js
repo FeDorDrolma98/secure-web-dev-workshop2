@@ -87,5 +87,50 @@ async function populate2(){
 }
 
 function queryOneLoca(id){
+    //const query=Location.find();
+    //query.setOptions({lean:true});
 
+    //query.collection(Location.collection); //bug et a pas l'air nécessaire
+    // test 1 : console.log(query.where('_id').gte(id));
+    // test 1 : console.log(query.$where(function(){return this._id===id}));
+    // test 2 : console.log(Location.findOne({'_id':id}));
+    // test 3 : const doc= Location.findOne({_id:"ObjectId('"+id+"')"});
+    const doc= Location.findOne({_id:id});
+    console.log(doc);
+
+}
+queryOneLoca('63332292db08aee5dea35777');
+
+function queryAllLoca(filmName){
+    //const query=Location.find();
+    //query.setOptions({lean:true});
+    const doc= Location.findOne({'filmName':filmName});
+    console.log(doc);
+}
+//queryAllLoca("Une jeune fille qui va bien");
+
+function delOneLoca(id){
+    Location.deleteOne({_id:id});
+}
+//queryAllLoca("Une jeune fille qui va bien");
+
+function addOneLoca(type,producer,enddate,name,district,geoloc,sourceloc,director,address,startdate,year){
+    const locat=new Location({
+        "filmType": type,
+        "filmProducerName": producer,
+        "endDate": enddate,
+        "filmName": name,
+        "district": district,
+        "geolocation": geoloc,
+        "sourceLocationId": sourceloc,
+        "filmDirectorName": director,
+        "address": address,
+        "startDate":startdate,
+        "year": year,
+    });
+    locat.save().then((res)=>console.log('enregistré !')).catch((e)=>console.log(e));
+}
+
+function updOneLoca(typeAmodif,amodif){
+    Location.updateOne({typeAmodif:amodif},function(err,res){});
 }
